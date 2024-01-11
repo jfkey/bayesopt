@@ -34,6 +34,11 @@ ADD_EXECUTABLE(bo_branin_timed ./bo_branin_timed.cpp )
 add_dependencies(bo_branin_timed bayesopt)
 TARGET_LINK_LIBRARIES(bo_branin_timed bayesopt)
 
+# my test without sample function
+ADD_EXECUTABLE(bo_myimpl ./bo_myimpl.cpp )
+add_dependencies(bo_myimpl bayesopt)
+TARGET_LINK_LIBRARIES(bo_myimpl bayesopt)
+
 ADD_EXECUTABLE(bo_branin_mcmc ./bo_branin_mcmc.cpp )
 add_dependencies(bo_branin_mcmc bayesopt)
 TARGET_LINK_LIBRARIES(bo_branin_mcmc bayesopt)

@@ -216,7 +216,99 @@ namespace bayesopt {
 
   };
 
-  /**@}*/
+  /**@}*/ 
+
+    /** \addtogroup BayesOpt
+   *  \brief Main module for Bayesian optimization
+   */
+  /*@{*/
+
+  /**
+   * \brief Abstract module for Bayesian optimization.
+   *
+   * This module provides Bayesian optimization using different
+   * non-parametric processes (Gaussian process or Student's t
+   * process) as distributions over surrogate functions.
+   *
+   * \see ContinuousModel for implementations of this module for
+   * a continuous input spaces
+   *
+   * \see DiscreteModel for implementations of this module for
+   * a discrete input spaces or categorical input variables
+   */
+  class BAYESOPT_API BayesOptBaseIt
+  {
+  public:
+    /** 
+     * Constructor
+     * @param params set of parameters (see parameters.hpp)
+     */
+    BayesOptBaseIt(size_t dim, Parameters params);
+
+    /** 
+     * Default destructor
+     */
+    virtual ~BayesOptBaseIt();
+ 
+    /** Initialize the optimization process.  */
+    void initializeOptimization(matrixd &xPoints, vectord &yPoints);
+
+     vectord getFinalResult();
+    
+    virtual bool checkReachability( const vectord &query )
+    { return true; };
+    
+    // Getters and Setters
+    ProbabilityDistribution* getPrediction(const vectord& query);
+    const Dataset* getData();
+    Parameters* getParameters();
+    double getValueAtMinimum(); 
+    double evaluateCriteria(const vectord& query);
+
+  protected:
+    /** Get optimal point in the inner space (e.g.: [0-1] hypercube) */
+    vectord getPointAtMinimum();
+ 
+    /** Sample a single point in the input space. Used for epsilon
+	greedy exploration. */
+    virtual vectord samplePoint() = 0;
+
+    /** 
+     * \brief Call the inner optimization method to find the optimal
+     * point acording to the criteria.  
+     * @param xOpt optimal point
+     */
+    virtual void findOptimal(vectord &xOpt) = 0;
+  
+    /** Remap the point x to the original space (e.g.:
+	unnormalization) */
+    virtual vectord remapPoint(const vectord& x) = 0;
+
+    // /** Selects the initial set of points to build the surrogate model. */
+    // virtual void generateInitialPoints(matrixd& xPoints) = 0;
+
+
+  protected:
+    Parameters mParameters;                    ///< Configuration parameters
+    size_t mDims;                                   ///< Number of dimensions
+    boost::mt19937 mEngine;                      ///< Random number generator
+
+  public:
+    boost::scoped_ptr<PosteriorModel> mModel; 
+    
+  public:
+    double mYPrev;
+    BayesOptBaseIt();
+
+    /** 
+     * \brief Selects the next point to evaluate according to a certain
+     * criteria or metacriteria
+     * 
+     * @return next point to evaluate
+     */
+    vectord nextPoint();  
+
+  };
 
 
 

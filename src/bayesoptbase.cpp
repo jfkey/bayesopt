@@ -192,6 +192,7 @@ namespace bayesopt
         yPoints[i] = evaluateSampleInternal(row(xPoints,i));
 	//We clear the vector in the first iteration
         saveResponse(yPoints[i], i==0);
+        std::cout << "x, y points: (" << xPoints(i, 0) <<  xPoints(i,1) << ") ->" << yPoints[i] << std::endl;
       }
     
     // Put samples into model

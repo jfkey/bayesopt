@@ -84,8 +84,10 @@ ENDIF(BAYESOPT_BUILD_SOBOL)
 
 SET( BAYESOPT_SRCS
   ./src/bayesoptcont.cpp
+  ./src/bayesoptcontIt.cpp
   ./src/bayesoptdisc.cpp
   ./src/bayesoptbase.cpp
+  ./src/bayesoptbaseIt.cpp
   ./src/bopt_state.cpp
   ./src/posteriormodel.cpp
   ./src/posterior_fixed.cpp

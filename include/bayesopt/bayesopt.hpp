@@ -36,7 +36,7 @@ namespace bayesopt  {
   }
   class NLOPT_Optimization;
   class CritCallback;
-
+  class CritCallbackIt;
 
   
   /** \addtogroup BayesOpt */
@@ -126,6 +126,52 @@ namespace bayesopt  {
     ContinuousModel();                       ///< Default constructor forbidden.
   };
   
+class BAYESOPT_API ContinuousModelIt: public BayesOptBaseIt
+  {
+  public:
+    /** 
+     * Constructor
+     * @param dim number of input dimensions
+     * @param params set of parameters (see parameters.h)
+     */
+    ContinuousModelIt(size_t dim, Parameters params);
+
+    /**  Default destructor  */
+    virtual ~ContinuousModelIt();
+
+    /** 
+     * \brief Sets the bounding box. 
+     *
+     * @param lowerBound vector with the lower bounds of the hypercube
+     * @param upperBound vector with the upper bounds of the hypercube
+     */
+    void setBoundingBox(const vectord &lowerBound,
+			const vectord &upperBound);
+ 
+    /** 
+     * \brief Call the inner optimization method to find the optimal
+     * point acording to the criteria.  
+     * @param xOpt optimal point
+     */
+    void findOptimal(vectord &xOpt);
+
+    vectord samplePoint();
+
+    /** Remap the point x to the original space (e.g.:
+	unnormalization) */
+    vectord remapPoint(const vectord& x);
+
+ 
+  private:
+    boost::scoped_ptr<utils::BoundingBox<vectord> > mBB;      ///< Bounding Box (input space limits)
+    boost::scoped_ptr<NLOPT_Optimization> cOptimizer;
+    boost::scoped_ptr<CritCallbackIt> mCallback;
+
+  private:
+    ContinuousModelIt();                       ///< Default constructor forbidden.
+  };
+  
+
 
   /**
    * \brief Bayesian optimization for functions in discrete spaces. 
