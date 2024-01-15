@@ -30,7 +30,17 @@ namespace bayesopt
       boost::numeric::ublas::vector<double> v(n);
       std::copy(array, array+n, v.begin());
       return v;
-    }
+    };
 
+    boost::numeric::ublas::matrix<double> array2matrix(const double array[], const size_t rows, const size_t cols) {
+      boost::numeric::ublas::matrix<double> m(rows, cols); 
+      for (size_t i = 0; i < rows; ++i) {
+          for (size_t j = 0; j < cols; ++j) {
+              m(i, j) = array[i * cols + j];
+          }
+      } 
+      return m;
+    }
+  
   } //  namespace utils
 } //namespace bayesopt

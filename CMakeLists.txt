@@ -21,6 +21,7 @@
 PROJECT(BayesOpt CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+# set cmake module search path 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} 
 		      ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -44,12 +45,12 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
-option(BAYESOPT_BUILD_EXAMPLES "Build examples and demos?" ON)
+option(BAYESOPT_BUILD_EXAMPLES "Build examples and demos?" OFF)  # ON
 option(BAYESOPT_BUILD_TESTS "Build tests?" OFF)
 option(BAYESOPT_PYTHON_INTERFACE "Build Python interface?" OFF)
-option(BAYESOPT_MATLAB_COMPATIBLE "Build library compatible with Matlab?" ON)
-option(BAYESOPT_BUILD_SOBOL "Build support for Sobol sequences?" ON)
-option(BAYESOPT_BUILD_SHARED "Build BayesOpt as a shared library?" OFF)
+option(BAYESOPT_MATLAB_COMPATIBLE "Build library compatible with Matlab?" OFF) # ON
+option(BAYESOPT_BUILD_SOBOL "Build support for Sobol sequences?" OFF)
+option(BAYESOPT_BUILD_SHARED "Build BayesOpt as a shared library?" ON) #OFF
 
 find_package( Boost REQUIRED )
 if(Boost_FOUND)
@@ -124,6 +125,7 @@ SET(UTILS_SRC
 
 SET(WRAPPPERS_SRC 
   ./src/wrappers/bayesoptwpr.cpp
+  ./src/wrappers/bayesoptwprit.cpp
   )
 
 
@@ -153,7 +155,7 @@ IF(BAYESOPT_BUILD_SHARED)
     ADD_DEFINITIONS(-Dbayesopt_EXPORT )
   ENDIF()
 ELSE()
-  ADD_LIBRARY(bayesopt STATIC ${BAYESOPT_SRCS}   
+  ADD_LIBRARY(bayesopt STATIC ${BAYESOPT_SRCS}   # STATIC
     ${WRAPPPERS_SRC} ${UTILS_SRC} )
 ENDIF()
 
