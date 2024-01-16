@@ -25,7 +25,7 @@
 #define _BAYESOPTWPR_H_
 
 #include "bayesopt/parameters.h"
-#include "bayesopt/bayesopt.hpp"
+
 /** \addtogroup BayesOpt */
 /*@{*/
 
@@ -102,7 +102,13 @@ extern "C" {
 						  bopt_params parameters);
  
 
-   BAYESOPT_API void* ContinuousModelIt_new(size_t dim, bopt_params params);
+
+BAYESOPT_API void * initializeOptimizationIt(int nDim, const double *lb, const double *ub, 
+                  int samplesize, const double * xpoints, const double * ypoints, bopt_params params);
+
+BAYESOPT_API void nextPointIt (void * optimizer, double *xnext );
+
+BAYESOPT_API void addSampleIt (void * optimizer, int nDim, const double * xnext, const double  ynext,  bopt_params params, int mCurrentIter);
 
   
 #ifdef __cplusplus

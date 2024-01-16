@@ -288,7 +288,7 @@ namespace bayesopt {
     // virtual void generateInitialPoints(matrixd& xPoints) = 0;
 
 
-  protected:
+  public:
     Parameters mParameters;                    ///< Configuration parameters
     size_t mDims;                                   ///< Number of dimensions
     boost::mt19937 mEngine;                      ///< Random number generator

@@ -182,87 +182,6 @@ nlopt/fast:
 	$(MAKE) -f nlopt2/CMakeFiles/nlopt.dir/build.make nlopt2/CMakeFiles/nlopt.dir/build
 .PHONY : nlopt/fast
 
-sobol/sobol.o: sobol/sobol.cpp.o
-
-.PHONY : sobol/sobol.o
-
-# target to build an object file
-sobol/sobol.cpp.o:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol.cpp.o
-.PHONY : sobol/sobol.cpp.o
-
-sobol/sobol.i: sobol/sobol.cpp.i
-
-.PHONY : sobol/sobol.i
-
-# target to preprocess a source file
-sobol/sobol.cpp.i:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol.cpp.i
-.PHONY : sobol/sobol.cpp.i
-
-sobol/sobol.s: sobol/sobol.cpp.s
-
-.PHONY : sobol/sobol.s
-
-# target to generate assembly for a file
-sobol/sobol.cpp.s:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol.cpp.s
-.PHONY : sobol/sobol.cpp.s
-
-sobol/sobol_i4.o: sobol/sobol_i4.cpp.o
-
-.PHONY : sobol/sobol_i4.o
-
-# target to build an object file
-sobol/sobol_i4.cpp.o:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i4.cpp.o
-.PHONY : sobol/sobol_i4.cpp.o
-
-sobol/sobol_i4.i: sobol/sobol_i4.cpp.i
-
-.PHONY : sobol/sobol_i4.i
-
-# target to preprocess a source file
-sobol/sobol_i4.cpp.i:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i4.cpp.i
-.PHONY : sobol/sobol_i4.cpp.i
-
-sobol/sobol_i4.s: sobol/sobol_i4.cpp.s
-
-.PHONY : sobol/sobol_i4.s
-
-# target to generate assembly for a file
-sobol/sobol_i4.cpp.s:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i4.cpp.s
-.PHONY : sobol/sobol_i4.cpp.s
-
-sobol/sobol_i8.o: sobol/sobol_i8.cpp.o
-
-.PHONY : sobol/sobol_i8.o
-
-# target to build an object file
-sobol/sobol_i8.cpp.o:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i8.cpp.o
-.PHONY : sobol/sobol_i8.cpp.o
-
-sobol/sobol_i8.i: sobol/sobol_i8.cpp.i
-
-.PHONY : sobol/sobol_i8.i
-
-# target to preprocess a source file
-sobol/sobol_i8.cpp.i:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i8.cpp.i
-.PHONY : sobol/sobol_i8.cpp.i
-
-sobol/sobol_i8.s: sobol/sobol_i8.cpp.s
-
-.PHONY : sobol/sobol_i8.s
-
-# target to generate assembly for a file
-sobol/sobol_i8.cpp.s:
-	$(MAKE) -f CMakeFiles/bayesopt.dir/build.make CMakeFiles/bayesopt.dir/sobol/sobol_i8.cpp.s
-.PHONY : sobol/sobol_i8.cpp.s
-
 src/bayesoptbase.o: src/bayesoptbase.cpp.o
 
 .PHONY : src/bayesoptbase.o
@@ -1222,15 +1141,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... bayesopt"
 	@echo "... nlopt"
-	@echo "... sobol/sobol.o"
-	@echo "... sobol/sobol.i"
-	@echo "... sobol/sobol.s"
-	@echo "... sobol/sobol_i4.o"
-	@echo "... sobol/sobol_i4.i"
-	@echo "... sobol/sobol_i4.s"
-	@echo "... sobol/sobol_i8.o"
-	@echo "... sobol/sobol_i8.i"
-	@echo "... sobol/sobol_i8.s"
 	@echo "... src/bayesoptbase.o"
 	@echo "... src/bayesoptbase.i"
 	@echo "... src/bayesoptbase.s"

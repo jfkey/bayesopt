@@ -41,14 +41,16 @@ class CContinuousModelIt: public bayesopt::ContinuousModelIt
  public:
 
   CContinuousModelIt(size_t dim, bopt_params params):
-    ContinuousModelIt(dim,params)  {}; 
+    ContinuousModelIt(dim,params)  {
+      printf("dim:%d, para.n_iterations:%d, para->alpha %.4f, \n", dim, this->mParameters.n_iterations, this->mParameters.alpha);
+    }; 
 
   virtual ~CContinuousModelIt(){};
  
 };
 
 void * initializeOptimizationIt(int nDim, const double *lb, const double *ub, int samplesize, const double * xpoints, const double * ypoints, bopt_params params) {
-  printf("initializeOptimizationIt\n");
+  printf("start initializeOptimizationIt\n");
   vectord result(nDim);
   vectord lowerBound = bayesopt::utils::array2vector(lb,nDim); 
   vectord upperBound = bayesopt::utils::array2vector(ub,nDim); 
@@ -83,6 +85,7 @@ void * initializeOptimizationIt(int nDim, const double *lb, const double *ub, in
     }
     optimizer->setBoundingBox(lowerBound,upperBound);
     optimizer->initializeOptimization(xPoints, yPoints);
+    printf("finish initializeOptimizationIt\n");
     return static_cast<void*>(optimizer);
 } 
 
@@ -93,6 +96,7 @@ void nextPointIt (void * optimizer, double *xnext ) {
     }
     CContinuousModelIt* opt = static_cast<CContinuousModelIt*>(optimizer);
     vectord xNext = opt -> nextPoint();
+
     std::copy(xNext.begin(), xNext.end(), xnext);
 }
 
@@ -103,6 +107,7 @@ void addSampleIt (void * optimizer, int nDim, const double * xnext, const double
     CContinuousModelIt* opt = static_cast<CContinuousModelIt*>(optimizer);
 
     opt->mModel->addSample(xNext,yNext); 
+    printf("add sample step 1\n");
     bool retrain = (params.n_iter_relearn > 0) && ((mCurrentIter + 1) % params.n_iter_relearn == 0);
     if (retrain) {
         opt->mModel->updateHyperParameters();
@@ -111,6 +116,7 @@ void addSampleIt (void * optimizer, int nDim, const double * xnext, const double
         opt-> mModel->updateSurrogateModel();
     }
     opt-> mModel->updateCriteria(xNext);
+    printf("add sample step 2\n");
 }
 
  

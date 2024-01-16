@@ -73,7 +73,7 @@ namespace bayesopt
     mModel->setSamples(yPoints); 
     
     mModel->updateHyperParameters();
-    mModel->fitSurrogateModel(); 
+    mModel->fitSurrogateModel();
     mYPrev = 0.0;
   }
   
@@ -115,39 +115,34 @@ namespace bayesopt
   vectord BayesOptBaseIt::nextPoint()
   {
     //Epsilon-Greedy exploration (see Bull 2011)
-    if ((mParameters.epsilon > 0.0) && (mParameters.epsilon < 1.0))
-      {
-	randFloat drawSample(mEngine,realUniformDist(0,1));
-	double result = drawSample();
-	FILE_LOG(logINFO) << "Trying random jump with prob:" << result;
-	if (mParameters.epsilon > result)
-	  {
-	    FILE_LOG(logINFO) << "Epsilon-greedy random query!";
-	    return samplePoint();
-	  }
-      }
+    if ((mParameters.epsilon > 0.0) && (mParameters.epsilon < 1.0)) {
+	    randFloat drawSample(mEngine,realUniformDist(0,1));
+	    double result = drawSample();
+	    FILE_LOG(logINFO) << "Trying random jump with prob:" << result;
+	    if (mParameters.epsilon > result) {
+	      FILE_LOG(logINFO) << "Epsilon-greedy random query!";
+	      return samplePoint();
+	    }
+    }
+    printf("next point step 1 \n");
 
     vectord Xnext(mDims);    
 
     // GP-Hedge and related algorithms
-    if (mModel->criteriaRequiresComparison())
-      {
-	bool changed = true;
-
-	mModel->setFirstCriterium();
-	while (changed)
-	  {
+    if (mModel->criteriaRequiresComparison()) {
+	    bool changed = true;
+    	mModel->setFirstCriterium();
+	    while (changed) {
+	      findOptimal(Xnext);
+	      changed = mModel->setNextCriterium(Xnext);
+	    }
+	    std::string name = mModel->getBestCriteria(Xnext);
+	    FILE_LOG(logINFO) << name << " was selected.";
+    } else{// Standard "Bayesian optimization"
+	    FILE_LOG(logDEBUG) << "------ Optimizing criteria ------";
 	    findOptimal(Xnext);
-	    changed = mModel->setNextCriterium(Xnext);
-	  }
-	std::string name = mModel->getBestCriteria(Xnext);
-	FILE_LOG(logINFO) << name << " was selected.";
-      }
-    else  // Standard "Bayesian optimization"
-      {
-	FILE_LOG(logDEBUG) << "------ Optimizing criteria ------";
-	findOptimal(Xnext);
-      }
+    }
+    printf("next point step 2 \n");
     return Xnext;
   }
   
