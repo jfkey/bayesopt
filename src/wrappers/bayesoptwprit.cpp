@@ -41,21 +41,18 @@ class CContinuousModelIt: public bayesopt::ContinuousModelIt
  public:
 
   CContinuousModelIt(size_t dim, bopt_params params):
-    ContinuousModelIt(dim,params)  {
-      printf("dim:%d, para.n_iterations:%d, para->alpha %.4f, \n", dim, this->mParameters.n_iterations, this->mParameters.alpha);
-    }; 
+    ContinuousModelIt(dim,params)  { }; 
 
   virtual ~CContinuousModelIt(){};
  
 };
 
 void * initializeOptimizationIt(int nDim, const double *lb, const double *ub, int samplesize, const double * xpoints, const double * ypoints, bopt_params params) {
-  printf("start initializeOptimizationIt\n");
   vectord result(nDim);
   vectord lowerBound = bayesopt::utils::array2vector(lb,nDim); 
   vectord upperBound = bayesopt::utils::array2vector(ub,nDim); 
-  matrixd xPoints = bayesopt::utils::array2matrix(xpoints, nDim, samplesize);
-  vectord yPoints = bayesopt::utils::array2vector(ub,nDim); 
+  matrixd xPoints = bayesopt::utils::array2matrix(xpoints, samplesize, nDim);
+  vectord yPoints = bayesopt::utils::array2vector(ub,samplesize); 
  
   CContinuousModelIt *optimizer;
   try {
@@ -84,8 +81,7 @@ void * initializeOptimizationIt(int nDim, const double *lb, const double *ub, in
       return nullptr; 
     }
     optimizer->setBoundingBox(lowerBound,upperBound);
-    optimizer->initializeOptimization(xPoints, yPoints);
-    printf("finish initializeOptimizationIt\n");
+    optimizer->initializeOptimization(xPoints, yPoints); 
     return static_cast<void*>(optimizer);
 } 
 
@@ -99,15 +95,12 @@ void nextPointIt (void * optimizer, double *xnext ) {
 
     std::copy(xNext.begin(), xNext.end(), xnext);
 }
-
-
+ 
 void addSampleIt (void * optimizer, int nDim, const double * xnext, const double  ynext,  bopt_params params, int mCurrentIter) {
     vectord xNext = bayesopt::utils::array2vector(xnext,nDim); 
     double yNext = ynext; 
-    CContinuousModelIt* opt = static_cast<CContinuousModelIt*>(optimizer);
-
-    opt->mModel->addSample(xNext,yNext); 
-    printf("add sample step 1\n");
+    CContinuousModelIt* opt = static_cast<CContinuousModelIt*>(optimizer); 
+    opt->mModel->addSample(xNext,yNext);  
     bool retrain = (params.n_iter_relearn > 0) && ((mCurrentIter + 1) % params.n_iter_relearn == 0);
     if (retrain) {
         opt->mModel->updateHyperParameters();
@@ -115,8 +108,7 @@ void addSampleIt (void * optimizer, int nDim, const double * xnext, const double
     } else {
         opt-> mModel->updateSurrogateModel();
     }
-    opt-> mModel->updateCriteria(xNext);
-    printf("add sample step 2\n");
+    opt-> mModel->updateCriteria(xNext); 
 }
 
  

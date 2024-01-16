@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             // "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "program": "${workspaceFolder}/bin/bo_myimpl",
+            "program": "${workspaceFolder}/bin/bo_myimple",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

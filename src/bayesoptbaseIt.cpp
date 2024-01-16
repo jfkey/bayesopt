@@ -70,8 +70,8 @@ namespace bayesopt
     mModel.reset(PosteriorModel::create(mDims,mParameters,mEngine));
     
     mModel->setSamples(xPoints);
-    mModel->setSamples(yPoints); 
-    
+    mModel->setSamples(yPoints);
+    int nums = yPoints.size(); 
     mModel->updateHyperParameters();
     mModel->fitSurrogateModel();
     mYPrev = 0.0;
@@ -124,10 +124,8 @@ namespace bayesopt
 	      return samplePoint();
 	    }
     }
-    printf("next point step 1 \n");
-
-    vectord Xnext(mDims);    
-
+     
+    vectord Xnext(mDims);     
     // GP-Hedge and related algorithms
     if (mModel->criteriaRequiresComparison()) {
 	    bool changed = true;
@@ -141,8 +139,7 @@ namespace bayesopt
     } else{// Standard "Bayesian optimization"
 	    FILE_LOG(logDEBUG) << "------ Optimizing criteria ------";
 	    findOptimal(Xnext);
-    }
-    printf("next point step 2 \n");
+    } 
     return Xnext;
   }
   
